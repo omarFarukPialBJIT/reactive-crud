@@ -3,12 +3,11 @@ package com.pial.reactivetask.controller;
 import com.pial.reactivetask.model.Student;
 import com.pial.reactivetask.service.StudentService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @RestController
 public class StudentController {
@@ -28,4 +27,17 @@ public class StudentController {
     Mono<Student> addStudentMono(@RequestBody Student student){
         return studentService.addStudentMono(student.getName(), student.getEmail());
     }
+
+
+    @PutMapping("/rstudent")
+    Mono<Student> updateStudentMono(@RequestBody Student student) {
+        return studentService.updateStudentMono(student.getId(), student.getName(), student.getEmail());
+    }
+
+
+    @DeleteMapping("/rstudent")
+    Mono<Void> deleteStudent(@RequestBody Student student) {
+        return studentService.deleteStudent(student.getId());
+    }
+
 }

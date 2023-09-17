@@ -25,6 +25,21 @@ public class StudentDao {
         return Mono.just(student);
     }
 
+    public Mono<Student> updateStudentMono(UUID id, String name, String email) {
+        return studentFlux
+                .filter(student -> student.getId().equals(id))
+                .next()
+                .doOnNext(student -> {
+                    student.setName(name);
+                    student.setEmail(email);
+                });
+    }
+
+    public Mono<Void> deleteStudent(UUID id) {
+        studentFlux = studentFlux.filter(student -> !student.getId().equals(id));
+        return Mono.empty();
+    }
+
 
 
 
